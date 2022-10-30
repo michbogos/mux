@@ -1,5 +1,5 @@
-C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c libc/*.c)
-HEADERS = $(wildcard kernel/*.h drivers/*.h cpu/*.h libc/*.h)
+C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c lib/*.c)
+HEADERS = $(wildcard kernel/*.h drivers/*.h cpu/*.h lib/*.h)
 # Nice syntax for file extension replacement
 OBJ = ${C_SOURCES:.c=.o} 
 
@@ -24,7 +24,7 @@ kernel.elf: boot/kernel_entry.o ${OBJ}
 	i386-elf-ld -o $@ -Ttext 0x1000 $^ 
 
 run: kernel.bin
-	qemu-system-i386 -kernel kernel.bin
+	qemu-system-i386 -kernel kernel.bin -serial file:serial.txt
 
 # Open the connection to qemu and load our kernel-object file with symbols
 debug: os-image.bin kernel.elf
@@ -44,4 +44,4 @@ debug: os-image.bin kernel.elf
 
 clean:
 	rm -rf *.bin *.dis *.o os-image.bin *.elf
-	rm -rf kernel/*.o boot/*.bin drivers/*.o boot/*.o cpu/*.o libc/*.o
+	rm -rf kernel/*.o boot/*.bin drivers/*.o boot/*.o cpu/*.o lib/*.o
