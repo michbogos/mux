@@ -48,8 +48,8 @@ void _start(void) {
     int* adress = (int*)framebuffer->address;
 
     for(int i = 0; i < width; i++){
-        for(int j = 0; j < height; j ++){
-            adress[i*width+j] = 0xff0000;
+        for(int j = 0; j < height; j++){
+            adress[i*height+j] = 0xffffff;
         }
     }
  
